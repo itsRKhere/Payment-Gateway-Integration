@@ -15,7 +15,7 @@ def pay():
     global payment,name,amount
     name = request.form.get('username')
     amount = request.form.get('amount')
-    client = razorpay.Client(auth=("rzp_test_uz9tIVoYhhhM0t","JfIv14cnSWoMaxIbbq0RDQLr"))
+    client = razorpay.Client(auth=("YOUR_RAZORPAY_KEY","YOUR_RAZORPAY_SECRET"))
 
     data = { "amount": int(amount)*100, "currency":"INR", "receipt": "#101" }
     payment = client.order.create(data=data)
