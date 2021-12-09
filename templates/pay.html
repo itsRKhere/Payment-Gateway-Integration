@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payement Page</title>
+</head>
+<body>
+
+    <div style="
+display: flex;
+height: 100%;
+justify-content: center; 
+align-items: center;
+background-color: #e4e6eb; ">
+    <button id="rzp-button1" style=
+    "background-color: #2783f3;
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    display: inline-block;
+    font-size: 50px;
+    width: 160px;
+    border-radius: 60px;"><b>PAY</b>
+</button>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    
+var options = {
+    "key": "rzp_test_uz9tIVoYhhhM0t",
+    "amount": "{{payment['amount']}}",
+    "currency": "{{payment['currency']}}",
+    "name": "Rohit Corp",
+    "description": "Donation",
+    "image": "https://static.wixstatic.com/media/1f667f_39dffaa2896740c8ae7d6f5c21be9158~mv2.png/v1/fill/w_60,h_60,al_c,q_85,usm_0.66_1.00_0.01/0.webp",
+    "order_id": "{{payment['id']}}",
+    "handler": function (response){
+        alert('Payement Success')
+        alert(response.razorpay_payment_id),
+        alert(response.razorpay_order_id),
+        alert(response.razorpay_signature)
+            
+    },
+    "prefill": {
+        "name": "Rohit Kumar",
+        "email": "rohit.kumar@gmail.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Tihor Foundation Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+
+</body>
+</html>
